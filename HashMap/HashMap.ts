@@ -1,3 +1,5 @@
+//this is a basic implementation with no collision handling. Refer to OpenAddressing and SeparateChaining
+//for more functional examples 
 
 class HashMap {
   hashmap: null[] | any[];
