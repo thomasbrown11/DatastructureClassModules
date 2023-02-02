@@ -9,6 +9,9 @@ class LLHashMap {
 
   constructor(size: number = 0) {
     //instantiate each element in hashmap array with a linked list
+
+    //cc solution
+    // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList());
     this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList());
   }
 
@@ -22,7 +25,17 @@ class LLHashMap {
 
   public assign(key: string, value: any): void {
     const arrayIndex: number = this.hash(key);
-    this.hashmap[arrayIndex] = value;
+    //you could just instantiate a new list inside an if statement 
+    // if (this.hashmap[arrayIndex] = null) {
+    //   this.hashmap[arrayIndex] = new SinglyLinkedList();
+    //   this.hashmap[arrayIndex].addToHead(value);
+    // }
+    const linkedList: SinglyLinkedList = this.hashmap[arrayIndex];
+    //if the head is empty then make the desired key value pair the head node (as an object)
+    if (linkedList.head === null) {
+      linkedList.addToHead({ key, value });
+      return;
+    }
   }
 
   public retrieve(key: string): any {
@@ -31,5 +44,12 @@ class LLHashMap {
   }
 
 }
+
+const testMap = new LLHashMap(10);
+// console.log(testMap);
+
+testMap.assign('hello', 'kitty')
+// console.log(testMap);
+console.log(testMap.retrieve('hello'));
 
 export default LLHashMap;
