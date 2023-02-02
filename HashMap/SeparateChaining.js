@@ -35,7 +35,6 @@ class LLHashMap {
             return;
         }
         else {
-            //CHECK WORK (works based on testing.. update retrieve?)**************
             let currentNode = linkedList.head; //equals head
             //while there is a current node (will iterate by making the node its link)
             while (currentNode) {
@@ -51,28 +50,21 @@ class LLHashMap {
                 }
                 //iterate to next node in linked list
                 currentNode = currentNode.link;
-                //********************** */
             }
         }
     }
     retrieve(key) {
         const arrayIndex = this.hash(key);
-        // return this.hashmap[arrayIndex]; //commented to experiment building out
-        //CHECK WORK**** (works in testing)
-        const indexList = this.hashmap[arrayIndex];
-        if (indexList.head.data.key === key) {
-            return indexList.head.data.value;
-        }
-        else {
-            let currentNode = indexList.head;
-            while (currentNode) {
-                if (currentNode.data.key === key) {
-                    return currentNode.data.value;
-                }
-                currentNode = currentNode.link;
+        let currentNode = this.hashmap[arrayIndex].head;
+        while (currentNode) {
+            //if the key matches then return the value... rememeber value will be overwritten in matching key case from assign()
+            if (currentNode.data.key === key) {
+                return currentNode.data.value;
             }
+            currentNode = currentNode.link;
         }
-        //**************************** */
+        //if no matches
+        return null;
     }
 }
 const testMap = new LLHashMap(10);
