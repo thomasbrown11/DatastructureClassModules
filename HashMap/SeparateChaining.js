@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Node_1 = __importDefault(require("../Linked Lists/SinglyLinkedList/Node"));
 const SinglyLinkedList_1 = __importDefault(require("../Linked Lists/SinglyLinkedList/SinglyLinkedList"));
 class LLHashMap {
     constructor(size = 0) {
@@ -33,15 +34,54 @@ class LLHashMap {
             linkedList.addToHead({ key, value });
             return;
         }
+        else {
+            //CHECK WORK (works based on testing.. update retrieve?)**************
+            let currentNode = linkedList.head; //equals head
+            //while there is a current node (will iterate by making the node its link)
+            while (currentNode) {
+                //if they parameter key matches current node data key
+                if (currentNode.data.key === key) {
+                    //overwrite the value (since key will obviously be the same) 
+                    currentNode.data.value = value;
+                    //break loop by returning the updated node
+                    return currentNode.data;
+                }
+                if (!currentNode.link) { //if there's no next node then make new node with parameter key,value as data and pass as tail node
+                    currentNode.link = new Node_1.default({ key, value });
+                }
+                //iterate to next node in linked list
+                currentNode = currentNode.link;
+                //********************** */
+            }
+        }
     }
     retrieve(key) {
         const arrayIndex = this.hash(key);
-        return this.hashmap[arrayIndex];
+        // return this.hashmap[arrayIndex]; //commented to experiment building out
+        //CHECK WORK**** (works in testing)
+        const indexList = this.hashmap[arrayIndex];
+        if (indexList.head.data.key === key) {
+            return indexList.head.data.value;
+        }
+        else {
+            let currentNode = indexList.head;
+            while (currentNode) {
+                if (currentNode.data.key === key) {
+                    return currentNode.data.value;
+                }
+                currentNode = currentNode.link;
+            }
+        }
+        //**************************** */
     }
 }
 const testMap = new LLHashMap(10);
 // console.log(testMap);
+console.log(testMap.hash('hello'));
+console.log(testMap.hash('mello'));
 testMap.assign('hello', 'kitty');
 // console.log(testMap);
-console.log(testMap.retrieve('hello'));
+testMap.assign('mello', 'schmitty');
+console.log(testMap.retrieve('mello'));
+// console.log(testMap.hashmap)
 exports.default = LLHashMap;

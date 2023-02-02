@@ -36,7 +36,7 @@ class LLHashMap {
       linkedList.addToHead({ key, value });
       return;
     } else {
-      //CHECK WORK **************
+      //CHECK WORK (works based on testing.. update retrieve?)**************
       let currentNode: Node = linkedList.head; //equals head
       //while there is a current node (will iterate by making the node its link)
       while (currentNode) {
@@ -59,16 +59,34 @@ class LLHashMap {
 
   public retrieve(key: string): any {
     const arrayIndex: number = this.hash(key);
-    return this.hashmap[arrayIndex];
+    // return this.hashmap[arrayIndex]; //commented to experiment building out
+    //CHECK WORK**** (works in testing)
+    const indexList: SinglyLinkedList | null = this.hashmap[arrayIndex];
+    if (indexList.head.data.key === key) {
+      return indexList.head.data.value;
+    } else {
+      let currentNode: Node | null = indexList.head;
+      while (currentNode) {
+        if (currentNode.data.key === key) {
+          return currentNode.data.value;
+        }
+        currentNode = currentNode.link;
+      }
+    }
+    //**************************** */
   }
 
 }
 
 const testMap = new LLHashMap(10);
 // console.log(testMap);
-
+console.log(testMap.hash('hello'))
+console.log(testMap.hash('mello'))
 testMap.assign('hello', 'kitty')
 // console.log(testMap);
-console.log(testMap.retrieve('hello'));
+testMap.assign('mello', 'schmitty')
 
+
+console.log(testMap.retrieve('mello'));
+// console.log(testMap.hashmap)
 export default LLHashMap;
