@@ -35,6 +35,25 @@ class LLHashMap {
     if (linkedList.head === null) {
       linkedList.addToHead({ key, value });
       return;
+    } else {
+      //CHECK WORK **************
+      let currentNode: Node = linkedList.head; //equals head
+      //while there is a current node (will iterate by making the node its link)
+      while (currentNode) {
+        //if they parameter key matches current node data key
+        if (currentNode.data.key === key) {
+          //overwrite the value (since key will obviously be the same) 
+          currentNode.data.value = value;
+          //break loop by returning the updated node
+          return currentNode.data;
+        }
+        if (!currentNode.link) { //if there's no next node then make new node with parameter key,value as data and pass as tail node
+          currentNode.link = new Node({ key, value });
+        }
+        //iterate to next node in linked list
+        currentNode = currentNode.link;
+        //********************** */
+      }
     }
   }
 
