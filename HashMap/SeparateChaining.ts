@@ -72,6 +72,29 @@ class LLHashMap {
     //if no matches
     return null;
   }
+
+  //deletes only specific 
+  public deleteNode(key: string, value: any): Node | string {
+    const arrayIndex: number = this.hash(key);
+    let linkedList: null | SinglyLinkedList = this.hashmap[arrayIndex];
+    let currentNode: null | Node = linkedList.head
+    let prevNode: null | Node = currentNode;
+    //if value is the head then delete head
+    if (linkedList.head.data.value === value) {
+      linkedList.removeHead();
+      return currentNode; // return removed Node
+    }
+    while (currentNode) {
+      if (currentNode.data.value === value) {
+        prevNode.link = currentNode.link;
+        return currentNode //return the removed Node
+      }
+      prevNode = currentNode;
+      currentNode = currentNode.link;
+    }
+    return 'Node not found';
+  }
+
 }
 
 const testMap = new LLHashMap(10);
@@ -84,8 +107,7 @@ testMap.assign('hello', 'kitty')
 
 testMap.assign('mello', 'schmitty')
 console.log(testMap.hashmap)
-
-console.log(testMap.retrieve('mouse'));
-// console.log(testMap.hashmap)
+console.log(testMap.deleteNode('hello', 'kitty'));
+console.log(testMap.hashmap[1].head)
 
 export default LLHashMap;

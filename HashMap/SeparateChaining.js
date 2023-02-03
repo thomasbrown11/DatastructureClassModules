@@ -60,7 +60,7 @@ class LLHashMap {
         const arrayIndex = this.hash(key);
         let currentNode = this.hashmap[arrayIndex].head;
         while (currentNode) {
-            console.log(currentNode);
+            // console.log(currentNode) //print loop
             //if the key matches then return the value... rememeber value will be overwritten in matching key case from assign()
             if (currentNode.data.key === key) {
                 return currentNode.data.value;
@@ -69,6 +69,27 @@ class LLHashMap {
         }
         //if no matches
         return null;
+    }
+    //deletes only specific 
+    deleteNode(key, value) {
+        const arrayIndex = this.hash(key);
+        let linkedList = this.hashmap[arrayIndex];
+        let currentNode = linkedList.head;
+        let prevNode = currentNode;
+        //if value is the head then delete head
+        if (linkedList.head.data.value === value) {
+            linkedList.removeHead();
+            return currentNode; // return removed Node
+        }
+        while (currentNode) {
+            if (currentNode.data.value === value) {
+                prevNode.link = currentNode.link;
+                return currentNode; //return the removed Node
+            }
+            prevNode = currentNode;
+            currentNode = currentNode.link;
+        }
+        return 'Node not found';
     }
 }
 const testMap = new LLHashMap(10);
@@ -80,6 +101,6 @@ testMap.assign('hello', 'kitty');
 // console.log(testMap.hashmap[1])
 testMap.assign('mello', 'schmitty');
 console.log(testMap.hashmap);
-console.log(testMap.retrieve('mouse'));
-// console.log(testMap.hashmap)
+console.log(testMap.deleteNode('hello', 'kitty'));
+console.log(testMap.hashmap[1].head);
 exports.default = LLHashMap;
