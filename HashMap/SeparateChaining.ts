@@ -73,12 +73,21 @@ class LLHashMap {
     return null;
   }
 
-  //deletes only specific 
+  //delete specific Node from any hash bucket at any location. 
   public deleteNode(key: string, value: any): Node | string {
     const arrayIndex: number = this.hash(key);
     let linkedList: null | SinglyLinkedList = this.hashmap[arrayIndex];
+    if (!linkedList) {
+      return 'there are no values in the hash bucket';
+    }
     let currentNode: null | Node = linkedList.head
     let prevNode: null | Node = currentNode;
+    //if bucket has only one item return to null
+    if (linkedList.head.data.value === value && !linkedList.head.link) {
+      this.hashmap[arrayIndex] = null;
+      return currentNode; // return removed Node
+    }
+
     //if value is the head then delete head
     if (linkedList.head.data.value === value) {
       linkedList.removeHead();
@@ -92,22 +101,38 @@ class LLHashMap {
       prevNode = currentNode;
       currentNode = currentNode.link;
     }
-    return 'Node not found';
+    return 'Node not found in hash bucket';
   }
-
+  //clear any bucket with the desired key 
+  public clearBucket(key: string): SinglyLinkedList {
+    const arrayIndex: number = this.hash(key);
+    let linkedList: null | SinglyLinkedList = this.hashmap[arrayIndex];
+    if (linkedList) {
+      this.hashmap[arrayIndex] = null;
+      return linkedList;
+    }
+  }
 }
 
 const testMap = new LLHashMap(10);
 // console.log(testMap);
-console.log(testMap.hash('hello'))
-console.log(testMap.hash('mello'))
+// console.log(testMap.hash('hello'))
+// console.log(testMap.hash('mello'))
 testMap.assign('hello', 'kitty')
 // console.log(testMap);
 // console.log(testMap.hashmap[1])
 
 testMap.assign('mello', 'schmitty')
 console.log(testMap.hashmap)
-console.log(testMap.deleteNode('hello', 'kitty'));
-console.log(testMap.hashmap[1].head)
+// console.log(testMap.deleteNode('hello', 'kitty'));
+// console.log(testMap.deleteNode('hello', 'pity'))
+// console.log(testMap.deleteNode('elbow', 'city'));
+// console.log(testMap.hashmap[1].head)
+
+testMap.assign('yellow', 'witty');
+console.log(testMap.hashmap);
+// console.log(testMap.deleteNode('yellow', 'witty'));
+console.log(testMap.clearBucket('yellow'));
+console.log(testMap.hashmap);
 
 export default LLHashMap;
