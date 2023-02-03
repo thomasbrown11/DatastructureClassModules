@@ -8,8 +8,6 @@ class LLHashMap {
   hashmap: null[] | SinglyLinkedList[];
 
   constructor(size: number = 0) {
-    //instantiate each element in hashmap array with a linked list
-    // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList()); //UNCOMMENT AND DELETE IF FAIL
     this.hashmap = new Array(size).fill(null);
   }
 
@@ -23,21 +21,12 @@ class LLHashMap {
 
   public assign(key: string, value: any): void {
     const arrayIndex: number = this.hash(key);
-    //you could just instantiate a new list inside an if statement DELETE IF FAIL
     let linkedList: null | SinglyLinkedList = this.hashmap[arrayIndex];
     if (linkedList === null) {
       linkedList = new SinglyLinkedList();
       linkedList.addToHead({ key, value });
       // console.log(linkedList)
-      this.hashmap[arrayIndex] = linkedList; //linkedList no longer references actual hashmap so specify
-      // console.log(this.hashmap[arrayIndex]);
-
-      // }
-      // const linkedList: SinglyLinkedList = this.hashmap[arrayIndex]; already up above but can change placement if fail
-      //if the head is empty then make the desired key value pair the head node (as an object)
-      // if (linkedList.head === null) {
-      // linkedList.addToHead({ key, value });
-      // return;
+      this.hashmap[arrayIndex] = linkedList; //linkedList doesn't references actual hashmap so specify
     } else {
       let currentNode: Node | null = linkedList.head; //equals head
       //while there is a current node (will iterate by making the node its link)
