@@ -10,9 +10,8 @@ const SinglyLinkedList_1 = __importDefault(require("../Linked Lists/SinglyLinked
 class LLHashMap {
     constructor(size = 0) {
         //instantiate each element in hashmap array with a linked list
-        //cc solution
-        // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList());
-        this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList_1.default());
+        // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList()); //UNCOMMENT AND DELETE IF FAIL
+        this.hashmap = new Array(size).fill(null);
     }
     hash(key) {
         let hashCode = 0;
@@ -23,16 +22,20 @@ class LLHashMap {
     }
     assign(key, value) {
         const arrayIndex = this.hash(key);
-        //you could just instantiate a new list inside an if statement 
-        // if (this.hashmap[arrayIndex] = null) {
-        //   this.hashmap[arrayIndex] = new SinglyLinkedList();
-        //   this.hashmap[arrayIndex].addToHead(value);
-        // }
-        const linkedList = this.hashmap[arrayIndex];
-        //if the head is empty then make the desired key value pair the head node (as an object)
-        if (linkedList.head === null) {
+        //you could just instantiate a new list inside an if statement DELETE IF FAIL
+        let linkedList = this.hashmap[arrayIndex];
+        if (linkedList === null) {
+            linkedList = new SinglyLinkedList_1.default();
             linkedList.addToHead({ key, value });
-            return;
+            // console.log(linkedList)
+            this.hashmap[arrayIndex] = linkedList; //linkedList no longer references actual hashmap so specify
+            // console.log(this.hashmap[arrayIndex]);
+            // }
+            // const linkedList: SinglyLinkedList = this.hashmap[arrayIndex]; already up above but can change placement if fail
+            //if the head is empty then make the desired key value pair the head node (as an object)
+            // if (linkedList.head === null) {
+            // linkedList.addToHead({ key, value });
+            // return;
         }
         else {
             let currentNode = linkedList.head; //equals head
@@ -57,6 +60,7 @@ class LLHashMap {
         const arrayIndex = this.hash(key);
         let currentNode = this.hashmap[arrayIndex].head;
         while (currentNode) {
+            console.log(currentNode);
             //if the key matches then return the value... rememeber value will be overwritten in matching key case from assign()
             if (currentNode.data.key === key) {
                 return currentNode.data.value;
@@ -73,7 +77,9 @@ console.log(testMap.hash('hello'));
 console.log(testMap.hash('mello'));
 testMap.assign('hello', 'kitty');
 // console.log(testMap);
+// console.log(testMap.hashmap[1])
 testMap.assign('mello', 'schmitty');
-console.log(testMap.retrieve('mello'));
+console.log(testMap.hashmap);
+console.log(testMap.retrieve('mouse'));
 // console.log(testMap.hashmap)
 exports.default = LLHashMap;

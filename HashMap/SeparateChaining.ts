@@ -5,14 +5,12 @@ import Node from '../Linked\ Lists/SinglyLinkedList/Node';
 import SinglyLinkedList from '../Linked Lists/SinglyLinkedList/SinglyLinkedList';
 
 class LLHashMap {
-  hashmap: null[] | any[];
+  hashmap: null[] | SinglyLinkedList[];
 
   constructor(size: number = 0) {
     //instantiate each element in hashmap array with a linked list
-
-    //cc solution
-    // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList());
-    this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList());
+    // this.hashmap = new Array(size).fill(null).map(() => new SinglyLinkedList()); //UNCOMMENT AND DELETE IF FAIL
+    this.hashmap = new Array(size).fill(null);
   }
 
   public hash(key: string): number {
@@ -25,18 +23,23 @@ class LLHashMap {
 
   public assign(key: string, value: any): void {
     const arrayIndex: number = this.hash(key);
-    //you could just instantiate a new list inside an if statement 
-    // if (this.hashmap[arrayIndex] = null) {
-    //   this.hashmap[arrayIndex] = new SinglyLinkedList();
-    //   this.hashmap[arrayIndex].addToHead(value);
-    // }
-    const linkedList: SinglyLinkedList = this.hashmap[arrayIndex];
-    //if the head is empty then make the desired key value pair the head node (as an object)
-    if (linkedList.head === null) {
+    //you could just instantiate a new list inside an if statement DELETE IF FAIL
+    let linkedList: null | SinglyLinkedList = this.hashmap[arrayIndex];
+    if (linkedList === null) {
+      linkedList = new SinglyLinkedList();
       linkedList.addToHead({ key, value });
-      return;
+      // console.log(linkedList)
+      this.hashmap[arrayIndex] = linkedList; //linkedList no longer references actual hashmap so specify
+      // console.log(this.hashmap[arrayIndex]);
+
+      // }
+      // const linkedList: SinglyLinkedList = this.hashmap[arrayIndex]; already up above but can change placement if fail
+      //if the head is empty then make the desired key value pair the head node (as an object)
+      // if (linkedList.head === null) {
+      // linkedList.addToHead({ key, value });
+      // return;
     } else {
-      let currentNode: Node = linkedList.head; //equals head
+      let currentNode: Node | null = linkedList.head; //equals head
       //while there is a current node (will iterate by making the node its link)
       while (currentNode) {
         //if they parameter key matches current node data key
@@ -59,6 +62,7 @@ class LLHashMap {
     const arrayIndex: number = this.hash(key);
     let currentNode: Node | null = this.hashmap[arrayIndex].head;
     while (currentNode) {
+      // console.log(currentNode) //print loop
       //if the key matches then return the value... rememeber value will be overwritten in matching key case from assign()
       if (currentNode.data.key === key) {
         return currentNode.data.value;
@@ -76,9 +80,12 @@ console.log(testMap.hash('hello'))
 console.log(testMap.hash('mello'))
 testMap.assign('hello', 'kitty')
 // console.log(testMap);
+// console.log(testMap.hashmap[1])
+
 testMap.assign('mello', 'schmitty')
+console.log(testMap.hashmap)
 
-
-console.log(testMap.retrieve('mello'));
+console.log(testMap.retrieve('mouse'));
 // console.log(testMap.hashmap)
+
 export default LLHashMap;
