@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SeparateChaining_1 = __importDefault(require("./SeparateChaining"));
+const OpenAddressing_linear_1 = __importDefault(require("./OpenAddressing_linear"));
 const testMap = new SeparateChaining_1.default(10);
 console.log(testMap);
 console.log(testMap.hash('hello'));
@@ -23,3 +24,14 @@ console.log(testMap.deleteNode('yellow', 'witty'));
 console.log(testMap.clearBucket('yellow'));
 console.log(testMap.clearBucket('cord'));
 console.log(testMap.hashmap);
+//Linear Open Addressing testing 
+const testMap2 = new OpenAddressing_linear_1.default(10);
+// console.log(testMap2);
+// console.log(testMap2.hash('hello'));
+testMap2.assign('hello', 'kitty');
+// testMap2.assign('mellow', 'city');
+// testMap2.assign('mellow', 'city');
+console.log(testMap2);
+console.log(testMap2.retrieve('hello'));
+console.log(testMap2.retrieve('mellow'));
+// console.log(testMap2.retrieve('trello'));
