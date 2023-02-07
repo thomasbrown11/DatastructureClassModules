@@ -173,6 +173,17 @@ class SinglyLinkedList {
         }
         return slowItertor; //return iterator that's moved half speed
     }
+    findNodeRecursively(data, currentNode = this.head) {
+        if (!currentNode) {
+            return null;
+        }
+        else if (currentNode.data === data) {
+            return currentNode;
+        }
+        else {
+            return this.findNodeRecursively(data, currentNode.link);
+        }
+    }
     rotate(k) {
         let count = 1;
         // let fastIter: Node | null = this.head;
