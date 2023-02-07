@@ -11,6 +11,7 @@ class TreeNode {
             this.children.push(new TreeNode(child));
         }
     }
+    //time complexity is awful.. at least O(n^2). Space complexity constant. ß 
     removeChild(childToRemove) {
         const length = this.children.length;
         //save a filtered children array as children array value
@@ -46,4 +47,6 @@ console.log(tree);
 // tree.removeChild(6);
 // console.log(tree);
 tree.removeChild(node);
+console.log(tree);
+tree.removeChild(70);
 console.log(tree);
