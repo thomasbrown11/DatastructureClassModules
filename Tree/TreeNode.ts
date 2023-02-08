@@ -42,13 +42,22 @@ class TreeNode {
   }
 
   //copypaste print method from tutorial.. just adds dashes to each child for quick visual
-  print(level: number = 0): void {
+  public print(level: number = 0): void {
     let result: string = '';
     for (let i = 0; i < level; i++) {
       result += '-- ';
     }
     console.log(`${result}${this.data}`);
     this.children.forEach(child => child.print(level + 1));
+  }
+
+  //prints nodes root>child1>all child1 children>child2 > all child2 children> etc
+  public depthFirstTraversal(): void {
+    console.log(this.data);
+    this.children.forEach(child => {
+      //recursion implements stack. All leaves must execute before moving to child2
+      child.depthFirstTraversal();
+    })
   }
 }
 

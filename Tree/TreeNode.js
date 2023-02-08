@@ -46,6 +46,14 @@ class TreeNode {
         console.log(`${result}${this.data}`);
         this.children.forEach(child => child.print(level + 1));
     }
+    //prints nodes root>child1>all child1 children>child2 > all child2 children> etc
+    depthFirstTraversal() {
+        console.log(this.data);
+        this.children.forEach(child => {
+            //recursion implements stack. All leaves must execute before moving to child2
+            child.depthFirstTraversal();
+        });
+    }
 }
 const tree = new TreeNode(1);
 // console.log(tree);
