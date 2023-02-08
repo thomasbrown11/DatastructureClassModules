@@ -35,10 +35,20 @@ class TreeNode {
       //for each child node in array 
       this.children.forEach(child => {
         //recursively call removeChild with original 'childToRemove' argument on all children..
-        //this will continue down all levels of the tree until there's a match... seems like it could trigger infinite loop.
+        //this will continue down all levels of the tree until there's a match... will just terminate when there's no more children.
         child.removeChild(childToRemove);
       });
     }
+  }
+
+  //copypaste print method from tutorial.. just adds dashes to each child for quick visual
+  print(level: number = 0): void {
+    let result: string = '';
+    for (let i = 0; i < level; i++) {
+      result += '-- ';
+    }
+    console.log(`${result}${this.data}`);
+    this.children.forEach(child => child.print(level + 1));
   }
 }
 
@@ -58,3 +68,4 @@ console.log(tree)
 
 tree.removeChild(70);
 console.log(tree);
+tree.print();
