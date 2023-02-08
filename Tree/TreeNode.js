@@ -54,6 +54,14 @@ class TreeNode {
             child.depthFirstTraversal();
         });
     }
+    breadthFirstTraversal() {
+        let queue = [this];
+        while (queue.length > 0) {
+            const current = queue.shift();
+            console.log(current.data);
+            queue = queue.concat(current.children);
+        }
+    }
 }
 const tree = new TreeNode(1);
 // console.log(tree);
