@@ -42,6 +42,29 @@ class BinaryTree {
       return null;
     }
   }
+
+  public retrieve(data: number): BinaryTree | null {
+    let currentNode: BinaryTree | null = this.data
+
+    while (data !== currentNode.data) {
+
+      if (data < currentNode.data && currentNode.left) {
+        currentNode = currentNode.left;
+      } else if (data < currentNode.data && !currentNode.left) {
+        return null;
+      }
+
+      if (data > currentNode.data && currentNode.right) {
+        currentNode = currentNode.right;
+      } else if (data > currentNode.data && !currentNode.right) {
+        return null;
+      }
+
+      return currentNode;
+
+    }
+
+  }
 }
 
 const bt = new BinaryTree(15);

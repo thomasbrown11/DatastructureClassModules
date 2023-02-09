@@ -43,6 +43,24 @@ class BinaryTree {
             return null;
         }
     }
+    retrieve(data) {
+        let currentNode = this.data;
+        while (data !== currentNode.data) {
+            if (data < currentNode.data && currentNode.left) {
+                currentNode = currentNode.left;
+            }
+            else if (data < currentNode.data && !currentNode.left) {
+                return null;
+            }
+            if (data > currentNode.data && currentNode.right) {
+                currentNode = currentNode.right;
+            }
+            else if (data > currentNode.data && !currentNode.right) {
+                return null;
+            }
+            return currentNode;
+        }
+    }
 }
 const bt = new BinaryTree(15);
 console.log(bt);
