@@ -27,6 +27,22 @@ class BinaryTree {
             }
         }
     }
+    //returning null means that all preceding recursive calls to method will return null back and null will be the final value passed
+    //when clearing the stack
+    recursiveRetrieve(data) {
+        if (data === this.data) { //base case
+            return this;
+        }
+        else if (data < this.data && this.left) { //if value is less and left property exists
+            this.left.recursiveRetrieve(data); //attempt retrieval from left
+        }
+        else if (data > this.data && this.right) { //if more than right and right exists
+            this.right.recursiveRetrieve(data); //attempt retrieval from right
+        }
+        else {
+            return null;
+        }
+    }
 }
 const bt = new BinaryTree(15);
 console.log(bt);
