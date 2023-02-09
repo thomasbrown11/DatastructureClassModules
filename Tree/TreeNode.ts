@@ -1,6 +1,6 @@
 class TreeNode {
   private data: any;
-  private children: any[];
+  public children: any[];
   constructor(data: any) {
     this.data = data;
     this.children = [];
@@ -13,19 +13,21 @@ class TreeNode {
       this.children.push(new TreeNode(child));
     }
   }
+  //to add a child to a child call treeNode.children[desired child].addChild(desired child add here)
 
   //time complexity is awful.. at least O(n^2). Space complexity constant. ß 
   public removeChild(childToRemove: any): void {
     const length: number = this.children.length;
-    //save a filtered children array as children array value
+    //save a filtered children array as children array value.. note that all duplicate values will be removed 
     this.children = this.children.filter(child => {
       //if argument is tree node 
       if (childToRemove instanceof TreeNode) {
-        //return true if argument node doesn't match current child node. True means remove from returned array
+        //return true if argument node doesn't match current child node. True means don't remove from returned array
+        //only values that 
         return childToRemove !== child;
       } else {
         //if argument is not tree node return true childToRemove doesn't equal current child node's data
-        //true removes from the returned array
+        //true stays in array, false is removed thus any matches are removed
         return childToRemove !== child.data;
       }
     });
@@ -70,20 +72,40 @@ class TreeNode {
   }
 }
 
-const tree = new TreeNode(1);
+// const tree = new TreeNode(1);
+// // console.log(tree);
+
+// tree.addChild(6)
+// let node = new TreeNode(7);
+// tree.addChild(node);
+
 // console.log(tree);
+// // tree.removeChild(6);
+// // console.log(tree);
 
-tree.addChild(6)
-let node = new TreeNode(7);
-tree.addChild(node);
+// tree.removeChild(node)
+// console.log(tree)
 
-console.log(tree);
-// tree.removeChild(6);
+// tree.removeChild(70);
 // console.log(tree);
+// tree.print();
 
-tree.removeChild(node)
-console.log(tree)
+const menu = new TreeNode('Menu');
 
-tree.removeChild(70);
-console.log(tree);
-tree.print();
+const entries = {
+  'Breakfast': ['Cereal', 'BBQ Chicken', 'Oatmeal'],
+  'Lunch': ['Soup', 'Sandwich', 'Lasagna'],
+  'Dinner': ['Yogurt', 'Filet Mignon', 'Fish Florentine']
+};
+
+const meals = Object.keys(entries); //populate array with just the key values from entries obj: ['Breakfast', 'Lunch', 'Dinner']
+for (let meal = 0; meal < meals.length; meal++) { //iterate through meals in order 
+  menu.addChild(meals[meal]); //add current meal in meals array as node to tree 
+  const entrylist = entries[meals[meal]]; //entryList = the value (an array of meals) of the current entries object key.. meals[0]='Breakfast'
+  //.. entries['Breakfast'] returns Cereal, BBQ sandwich, Oatmeal 
+  entrylist.forEach(entry => { //for each in current meals value array (ceal, bbq, oatmeal on breakfast)
+    menu.children[meal].addChild(entry); //add child to the child of the root.. inner array of array [breakfast.children.. all array index from entries]
+  });
+}
+
+menu.print();
